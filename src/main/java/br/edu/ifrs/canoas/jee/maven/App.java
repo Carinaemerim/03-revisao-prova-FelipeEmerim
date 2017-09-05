@@ -1,4 +1,4 @@
-package br.edu.ifrs.canoas.jee._maven;
+package br.edu.ifrs.canoas.jee.maven;
 
 /**
  * Hello world!
