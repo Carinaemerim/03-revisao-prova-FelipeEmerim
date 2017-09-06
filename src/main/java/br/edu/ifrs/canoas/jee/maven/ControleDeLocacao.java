@@ -4,11 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class ControleDeLocacao {
 
 	
 	private Map <Associado, List<Acervo>> emprestimos = new HashMap<Associado, List<Acervo>>();
+	
+	
+	public List<Acervo> getObjectList(Associado a1)
+	{
+		return emprestimos.get(a1);
+	}
+	
+	public Acervo getObjElement(Associado a1, int i)
+	{
+		return emprestimos.get(a1).get(i);
+	}
 	
 	
 	public Map<Associado, List<Acervo>> getEmprestimos()
@@ -63,7 +75,13 @@ public class ControleDeLocacao {
 	}
 	public int getTotalLocados()
 	{
-		return emprestimos.values().size();
+		int count = 0;
+		for (Entry<Associado, List<Acervo>> e: emprestimos.entrySet())
+		{
+			count += e.getValue().size();
+		}
+		
+		return count;
 	}
 	
 	
