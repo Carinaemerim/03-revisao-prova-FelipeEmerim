@@ -1,15 +1,14 @@
 package br.edu.ifrs.canoas.jee.maven;
 
-import static org.junit.Assert.*;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.edu.ifrs.canoas.jee.maven.*;
 
-import org.junit.Test;
 
-public class ControleDeLocacaoTest 
+
+
+public class ControleDeLocacaoTeste 
 {
 
 	ControleDeLocacao cdl;
@@ -36,7 +35,7 @@ public class ControleDeLocacaoTest
 	}
 	
 	@Test
-	public void adicionaDoisEmprestimosTest()
+	public void adicionaDoisEmprestimosTeste()
 	{
 		Associado a1 = createAssociado();
 		Filme f1 = createFilme();
@@ -53,7 +52,7 @@ public class ControleDeLocacaoTest
 	}
 	
 	@Test
-	public void getTotalLocadosTest()
+	public void getTotalLocadosTeste()
 	{
 		Associado a1 = createAssociado();
 		Filme f1 = createFilme();
@@ -74,6 +73,69 @@ public class ControleDeLocacaoTest
 		cdl.adicionaEmprestimo(a2, j2);
 		
 		assertThat(cdl.getTotalLocados()).isEqualTo(3);
+	}
+	
+	@Test
+	public void locaNullTeste()
+	{
+		Filme f1 = createFilme();
+		Associado a1 = null;
+		
+		assertThat(cdl.adicionaEmprestimo(a1, f1)).isEqualTo(false);
+	}
+	
+	@Test
+	public void devolveNullTeste()
+	{
+		Filme f1 = null;
+		Associado a1 = null;
+		
+		assertThat(cdl.devolveEmprestimo(a1, f1)).isEqualTo(false);
+	}
+	
+	@Test
+	public void adicionaFilmeLocadoTeste()
+	{
+		Filme f1 = createFilme();
+		Associado a1 = createAssociado();
+		
+		cdl.adicionaEmprestimo(a1,f1);
+		Associado a2 = createAssociado();
+		
+		a2.setCodigo("A2");
+		
+		assertThat(cdl.adicionaEmprestimo(a2, f1)).isEqualTo(false);
+	}
+	
+	@Test
+	public void getElementoMapaTeste()
+	{
+		Associado a1 = createAssociado();
+		Filme f1 = createFilme();
+		
+		assertThat(cdl.getObjElement(a1, -1)).isEqualTo(null);
+		assertThat(cdl.getObjElement(a1, 0)).isEqualTo(null);
+		
+		cdl.adicionaEmprestimo(a1, f1);
+		assertThat(cdl.getObjElement(a1, 7)).isEqualTo(null);
+		
+		a1 = null;
+		
+		assertThat(cdl.getObjectList(a1)).isEqualTo(null);
+		
+		
+	}
+	
+	@Test
+	public void DevolveEmprestimoTeste()
+	{
+		Associado a1 = createAssociado();
+		Filme f1 = createFilme();
+		
+		cdl.adicionaEmprestimo(a1, f1);
+		assertThat(cdl.devolveEmprestimo(a1, f1)).isEqualTo(true);
+		assertThat(f1.isLocado()).isEqualTo(false);
+		assertThat(cdl.getObjElement(a1, 0)).isEqualTo(null);
 	}
 	
 	public Filme createFilme()

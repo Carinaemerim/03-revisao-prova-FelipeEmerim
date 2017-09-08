@@ -9,16 +9,42 @@ import java.util.Map.Entry;
 public class ControleDeLocacao {
 
 	
-	private Map <Associado, List<Acervo>> emprestimos = new HashMap<Associado, List<Acervo>>();
+	public Map <Associado, List<Acervo>> emprestimos = new HashMap<Associado, List<Acervo>>();
 	
 	
 	public List<Acervo> getObjectList(Associado a1)
 	{
+		if(a1 == null)
+		{
+			return null;
+		}
+		
+		if(!emprestimos.containsKey(a1))
+		{
+			return null;
+		}
+		
 		return emprestimos.get(a1);
 	}
 	
 	public Acervo getObjElement(Associado a1, int i)
 	{
+		if(a1 == null || i < 0)
+		{
+			return null;
+		}
+		
+		if(!emprestimos.containsKey(a1) || emprestimos.get(a1).isEmpty())
+		{
+			return null;
+		}
+		
+		if(i > emprestimos.get(a1).size())
+		{
+			return null;
+		}
+		
+		
 		return emprestimos.get(a1).get(i);
 	}
 	
@@ -30,7 +56,7 @@ public class ControleDeLocacao {
 	
 	public boolean adicionaEmprestimo(Associado associado, Acervo acervo)
 	{
-		if(acervo.isLocado())
+		if(acervo.isLocado() || associado == null|| acervo == null)
 		{
 			return false;
 		}
@@ -60,7 +86,7 @@ public class ControleDeLocacao {
 	
 	public boolean devolveEmprestimo(Associado associado, Acervo acervo)
 	{
-		if(!acervo.isLocado())
+		if(associado == null || acervo == null|| !acervo.isLocado())
 		{
 			return false;
 		}
